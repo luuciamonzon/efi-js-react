@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-const AuthAccesorio = () => {
+const AuthUser = () => {
   const [message, setMessage] = useState("");
 
   const login = async (username, password) => {
@@ -54,4 +54,4 @@ const AuthAccesorio = () => {
   );
 };
 
-export default AuthAccesorio;
+export default AuthUser;
