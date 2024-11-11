@@ -81,7 +81,7 @@ const Accesorios = () => {
       {isAdmin ? (
         <div className="row">
           <div className="col-md-6">
-            <h4>{editing ? "Editar Accesorio" : "Crear un Nuevo Accesorio"}</h4>
+            <h4>{editing ? "Editar accesorio" : "Crear un nuevo accesorio"}</h4>
             <Formik
               enableReinitialize
               initialValues={{

@@ -100,7 +100,7 @@ const CreateUser = () => {
     <div className="container">
       {isAdmin ? (
         <>
-          <h4>{editing ? "Editar Usuario" : "Crear Nuevo Usuario"}</h4>
+          <h4>{editing ? "Editar usuario" : "Crear nuevo usuario"}</h4>
           <Formik
             enableReinitialize
             initialValues={{
@@ -162,7 +162,7 @@ const CreateUser = () => {
                   )}
                 </div>
                 <Button
-                  label={editing ? "Actualizar Usuario" : "Crear Usuario"}
+                  label={editing ? "Actualizar usuario" : "Crear usuario"}
                   icon="pi pi-check"
                   type="submit"
                   disabled={!isValid}
@@ -174,7 +174,7 @@ const CreateUser = () => {
 
           {message && <div className="alert alert-info mt-3">{message}</div>}
 
-          <h3>Lista de Usuarios</h3>
+          <h4>Lista de Usuarios</h4>
           <ul>
             {users.map(user => (
               <li key={user.id}>
