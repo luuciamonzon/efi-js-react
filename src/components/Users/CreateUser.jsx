@@ -196,7 +196,7 @@ const CreateUser = () => {
           </ul>
         </>
       ) : (
-        <p>No estás autorizado para gestionar usuarios.</p>
+        <p>No estás autorizado para gestionar nuevos usuarios.</p>
       )}
     </div>
   );

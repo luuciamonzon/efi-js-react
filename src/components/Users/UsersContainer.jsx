@@ -43,7 +43,7 @@ const UserContainer = () => {
           )}
         </>
       ) : (
-        <p>No tienes permisos para gestionar usuarios.</p>
+        <p>No estás autorizado para gestionar usuarios.</p>
       )}
     </div>
   );
