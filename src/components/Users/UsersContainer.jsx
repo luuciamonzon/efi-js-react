@@ -1,58 +1,55 @@
-import { useState, useEffect } from 'react';
-import { ProgressSpinner } from 'primereact/progressspinner';
-import UsersView from './UsersView';
+import { useState, useEffect } from "react";
+import UsersView from "./UsersView";
+import { ProgressSpinner } from "primereact/progressspinner";
 
-const UsersContainer = () => {
-    const [dataUsers, setDataUsers] = useState([]);
-    const [loadingUsers, setLoadingUsers] = useState(true);
-    const [error, setError] = useState(null); // Para manejar errores
+const UserContainer = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("token");
+  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
 
-    const getDataUsers = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/users", {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`,
-                    "Content-Type": "application/json"
-                },
-            });
-    
-            // Verifica el código de estado HTTP
-            if (!response.ok) {
-                console.error("Código de estado:", response.status);
-                const errorDetails = await response.text(); // Obtener el contenido como texto
-                console.error("Detalles del error:", errorDetails); // Mostrar detalles como texto
-                throw new Error(`Hubo un error en la petición: ${response.statusText}`);
-            }
-    
-            const results = await response.json();
-            setDataUsers(results);
-    
-        } catch (error) {
-            console.error("Hubo un error en la API:", error);
-            setError(error.message); // Establecer el mensaje de error
-        } finally {
-            setLoadingUsers(false);
-        }
-    };
-    
-    
+  // Fetch users desde la API
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("http://127.0.0.1:5000/users", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = await response.json();
+      setUsers(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        getDataUsers();
-    }, []);
+  // Se ejecuta al cargar el componente para obtener los usuarios
+  useEffect(() => {
+    if (isAdmin) {
+      fetchUsers();
+    }
+  }, [isAdmin]);
 
-    return (
-        <div>
-            {loadingUsers ? (
-                <ProgressSpinner />
-            ) : error ? (
-                <div>{`Error: ${error}`}</div> // Muestra el error si hay
-            ) : (
-                <UsersView dataUsers={dataUsers} />
-            )}
-        </div>
-    );
+  return (
+    <div className="container">
+
+      {/* Solo mostrar la lista de usuarios si estamos en el modo de visualización */}
+      {isAdmin ? (
+        <>
+          {loading ? (
+            <ProgressSpinner />
+          ) : (
+            <UsersView dataUsers={users} />
+          )}
+        </>
+      ) : (
+        <p>No tienes permisos para gestionar usuarios.</p>
+      )}
+    </div>
+  );
 };
 
-export default UsersContainer;
+export default UserContainer;

@@ -1,19 +1,26 @@
-import { Fragment } from "react"
-import { ProgressSpinner } from "primereact/progressspinner"
-
-const UsersView = ({ loadingUsers, dataUsers }) => {
+const UsersView = ({ dataUsers }) => {
     return (
-        <Fragment>  
-            {loadingUsers ?
-                <ProgressSpinner />
-                :
-                dataUsers.map((user) => (
-                    <div key={user.id}>
-                        <h3>Nombre: {user.username}</h3>
-                    </div>
-                ))
-            }
-        </Fragment>
-    )
-}
-export default UsersView
+      <div>
+        <h4>Lista de Usuarios</h4>
+        <table className="p-datatable p-datatable-responsive">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dataUsers.map((user) => (
+              <tr key={user.id}>
+                <td>{user.username}</td>
+                <td>{user.is_admin ? "Administrador" : "Usuario"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+  
+  export default UsersView;
+  

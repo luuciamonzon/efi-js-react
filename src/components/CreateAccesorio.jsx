@@ -27,15 +27,15 @@ const Accesorios = () => {
 
   useEffect(() => {
     fetchAccesorios();
-  }, );
+  }, []);
 
   const handleGuardar = async (values, { resetForm }) => {
     try {
-      const url = editing 
+      const url = editing
         ? `http://127.0.0.1:5000/accesorio/${editing}/editar`
         : "http://127.0.0.1:5000/accesorios";
       const method = editing ? "PUT" : "POST";
-      
+    
       const response = await fetch(url, {
         method,
         headers: {
@@ -44,9 +44,9 @@ const Accesorios = () => {
         },
         body: JSON.stringify({ nombre: values.nombre }),
       });
-      
+    
       if (!response.ok) throw new Error("Error al guardar el accesorio");
-      
+    
       setEditing(null);
       fetchAccesorios();
       resetForm();
@@ -56,7 +56,7 @@ const Accesorios = () => {
       setMessage("Error al guardar el accesorio.");
     }
   };
-  
+
   const handleEditar = (id) => setEditing(id);
 
   const handleEliminar = async (id) => {
@@ -65,9 +65,9 @@ const Accesorios = () => {
         method: "POST",
         headers: { Authorization: token },
       });
-      
+    
       if (!response.ok) throw new Error("Error al eliminar accesorio");
-      
+    
       fetchAccesorios();
       setMessage("Accesorio eliminado exitosamente.");
     } catch (error) {
@@ -84,7 +84,9 @@ const Accesorios = () => {
             <h4>{editing ? "Editar Accesorio" : "Crear un Nuevo Accesorio"}</h4>
             <Formik
               enableReinitialize
-              initialValues={{ nombre: editing ? accesorios.find(a => a.id === editing).nombre : "" }}
+              initialValues={{
+                nombre: editing ? accesorios.find(a => a.id === editing).nombre : "",
+              }}
               validationSchema={ValidationSchema}
               onSubmit={handleGuardar}
             >
@@ -114,7 +116,7 @@ const Accesorios = () => {
                 </form>
               )}
             </Formik>
-            </div>
+          </div>
 
           <div className="col-md-6">
             <h4>Listado de Accesorios</h4>
@@ -123,19 +125,18 @@ const Accesorios = () => {
                 <li key={accesorio.id} className="list-group-item d-flex justify-content-between align-items-center">
                   <span>{accesorio.nombre}</span>
                   <div>
-                <Button
-                  label="Editar"
-                  icon="pi pi-pencil"
-                  className="p-button-warning p-button-sm me-2"
-                  onClick={() => handleEditar(accesorio.id)}
-                />
-                <Button
-                  label="Eliminar"
-                  icon="pi pi-trash"
-                  className="p-button-danger p-button-sm"
-                  onClick={() => handleEliminar(accesorio.id)}
-                />
-
+                    <Button
+                      label="Editar"
+                      icon="pi pi-pencil"
+                      className="p-button-warning p-button-sm me-2"
+                      onClick={() => handleEditar(accesorio.id)}
+                    />
+                    <Button
+                      label="Eliminar"
+                      icon="pi pi-trash"
+                      className="p-button-danger p-button-sm"
+                      onClick={() => handleEliminar(accesorio.id)}
+                    />
                   </div>
                 </li>
               ))}
