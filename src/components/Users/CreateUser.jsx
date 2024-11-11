@@ -100,7 +100,6 @@ const CreateUser = () => {
     <div className="container">
       {isAdmin ? (
         <>
-          {/* Formulario para crear o editar usuario */}
           <h4>{editing ? "Editar Usuario" : "Crear Nuevo Usuario"}</h4>
           <Formik
             enableReinitialize
@@ -175,8 +174,7 @@ const CreateUser = () => {
 
           {message && <div className="alert alert-info mt-3">{message}</div>}
 
-          {/* Lista de usuarios */}
-          <h4>Lista de Usuarios</h4>
+          <h3>Lista de Usuarios</h3>
           <ul>
             {users.map(user => (
               <li key={user.id}>

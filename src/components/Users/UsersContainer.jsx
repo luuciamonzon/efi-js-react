@@ -8,7 +8,6 @@ const UserContainer = () => {
   const token = localStorage.getItem("token");
   const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
 
-  // Fetch users desde la API
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -26,7 +25,6 @@ const UserContainer = () => {
     }
   };
 
-  // Se ejecuta al cargar el componente para obtener los usuarios
   useEffect(() => {
     if (isAdmin) {
       fetchUsers();
@@ -36,7 +34,6 @@ const UserContainer = () => {
   return (
     <div className="container">
 
-      {/* Solo mostrar la lista de usuarios si estamos en el modo de visualización */}
       {isAdmin ? (
         <>
           {loading ? (
